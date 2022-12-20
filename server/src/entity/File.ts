@@ -5,9 +5,9 @@ export class File {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ unique: true })
   name: string;
 
-  @Column("timestamp", { default: ()=>"CURRENT_TIMESTAMP()" })
+  @Column("timestamp", { default: () => "CURRENT_TIMESTAMP()" })
   created_at: Date;
 }
