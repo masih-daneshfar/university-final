@@ -1,6 +1,7 @@
 import { Request, Response, Router } from "express";
 import { AppDataSource } from "../config/data-source";
 import { Faq } from "../entity/Faq";
+import AuthMiddleware from "../middlewares/auth.mw";
 
 const router = Router();
 // register routes
@@ -24,7 +25,7 @@ router.get("/:id", async function (req: Request, res: Response, next) {
   }
 });
 
-router.post("/new", async function (req: Request, res: Response, next) {
+router.post("/new",AuthMiddleware(), async function (req: Request, res: Response, next) {
   try {
     const newFaq = AppDataSource.getRepository(Faq).create(req.body);
     const results = await AppDataSource.getRepository(Faq).save(newFaq);
@@ -34,7 +35,7 @@ router.post("/new", async function (req: Request, res: Response, next) {
   }
 });
 
-router.put("/update/:id", async function (req: Request, res: Response, next) {
+router.put("/update/:id",AuthMiddleware(), async function (req: Request, res: Response, next) {
   try {
     const faq = await AppDataSource.getRepository(Faq).findOneBy({
       id: Number(req.params.id),
@@ -47,7 +48,7 @@ router.put("/update/:id", async function (req: Request, res: Response, next) {
   }
 });
 
-router.delete("/remove/:id", async function (req: Request, res: Response) {
+router.delete("/remove/:id",AuthMiddleware(), async function (req: Request, res: Response) {
   const results = await AppDataSource.getRepository(Faq).delete(req.params.id);
   return res.send(results);
 });

@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
 @Entity()
 export class Teacher {
@@ -8,7 +8,7 @@ export class Teacher {
   @Column({ nullable: true })
   fullName?: string;
 
-  @Column('text')
+  @Column("text")
   description: string;
 
   @Column("timestamp", { default: () => "CURRENT_TIMESTAMP()" })

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ajite/editorjs-image-base64": "^0.0.2",
     "@editorjs/checklist": "^1.4.0",
     "@editorjs/editorjs": "^2.26.2",
     "@editorjs/header": "^2.7.0",
@@ -18,6 +19,7 @@
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "react-editor-js": "^2.1.0",
+    "react-hot-toast": "^2.4.0",
     "react-router-dom": "^6.4.5",
     "react-scripts": "5.0.1",
     "sort-by": "^1.2.0",

@@ -1,21 +1,21 @@
 import Anchor from "@components/anchor";
-import styles from "./adminPostItem.module.css";
+import styles from "./adminFaqItem.module.css";
 
-interface AdminPostItemType {
+interface AdminFaqItemType {
   title?: string;
   summery?: string;
   id?: number;
 }
-function AdminPostItem({ id, summery, title }: AdminPostItemType) {
+function AdminFaqItem({ id, summery, title }: AdminFaqItemType) {
   return (
     <>
       <div className={styles.postContainer}>
         <h3 className={styles.postTitle}>{title}</h3>
         <p className={styles.postSummery}>{summery}</p>
-        <Anchor role="button" to={`/panel/blog/${id}`} contrast fullWidth>ویرایش</Anchor>
+        <Anchor role="button" to={`/panel/faq/${id}`} contrast fullWidth>ویرایش</Anchor>
       </div>
     </>
   );
 }
 
-export default AdminPostItem;
+export default AdminFaqItem;

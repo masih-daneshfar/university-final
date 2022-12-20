@@ -21,6 +21,12 @@
   column-gap: 2rem;
   padding-block: 0.2rem;
   padding-inline: 0.4rem;
+  width: 100%;
+}
+.menuBar ul{
+  column-gap: 2rem;
+  padding-block: 0.2rem;
+  padding-inline: 0.4rem;
   flex-wrap: wrap;
   justify-content: center;
   margin-inline: auto !important;

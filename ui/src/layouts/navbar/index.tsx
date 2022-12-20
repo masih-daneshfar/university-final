@@ -1,11 +1,14 @@
+import { logoutApiCall } from "@api/apis";
 import Anchor from "@components/anchor";
 import clsx from "clsx";
+import { useGlobalContext } from "context";
+import { useNavigate } from "react-router-dom";
 import styles from "./navbarLayout.module.css";
 
-interface NavbarType {
-  isAdmin?: boolean;
-}
-export default function NavbarLayout({ isAdmin }: NavbarType) {
+export default function NavbarLayout() {
+  const {
+    currentUser: { loggedIn, role },
+  } = useGlobalContext();
   return (
     <div className='container-fluid'>
       <nav className={clsx(styles.container, "container-fluid")}>
@@ -16,16 +19,29 @@ export default function NavbarLayout({ isAdmin }: NavbarType) {
             </Anchor>
           </li>
         </ul>
-        {isAdmin ? <NavbarAdminMenuLinks /> : <NavbarPublicMenuLinks />}
+        <NavbarMenuLinks loggedIn={loggedIn} role={role} />
       </nav>
     </div>
   );
 }
+interface NavbarMenuLinksType {
+  loggedIn: boolean;
+  role?: "ADMIN" | "USER";
+}
+const NavbarMenuLinks = ({ loggedIn, role }: NavbarMenuLinksType) => {
+  const navigate = useNavigate();
 
-const NavbarPublicMenuLinks = () => {
+  const { updateUserInfo } = useGlobalContext();
+
+  const onLogout = () => {
+    logoutApiCall(async () => {
+      await updateUserInfo();
+      navigate("/");
+    });
+  };
   return (
-    <>
-      <ul className={styles.menuBar}>
+    <div className={styles.menuBar}>
+      <ul>
         <li>
           <Anchor to='/' className={clsx(styles.menuBarItem, "contrast")}>
             <strong>خانه</strong>
@@ -65,33 +81,60 @@ const NavbarPublicMenuLinks = () => {
             <strong>گالری</strong>
           </Anchor>
         </li>
-        <li>
-          <Anchor to='/auth' className={clsx(styles.menuBarItem, "contrast")}>
-            <strong>ورود/ثبت‌نام</strong>
-          </Anchor>
-        </li>
+        {loggedIn ? (
+          <>
+            <li>
+              <Anchor
+                to='/panel'
+                className={clsx(styles.menuBarItem, "contrast")}
+              >
+                <strong>پنل شخصی</strong>
+              </Anchor>
+            </li>
+            <li>
+              <Anchor
+                to='#'
+                onClick={onLogout}
+                className={clsx(styles.menuBarItem, "contrast")}
+              >
+                <strong>خروج</strong>
+              </Anchor>
+            </li>
+          </>
+        ) : (
+          <li>
+            <Anchor
+              to='/auth/login'
+              className={clsx(styles.menuBarItem, "contrast")}
+            >
+              <strong>ورود/ثبت‌نام</strong>
+            </Anchor>
+          </li>
+        )}
       </ul>
-    </>
+      {role === "ADMIN" && <NavbarAdminMenuLinks />}
+    </div>
   );
 };
 const NavbarAdminMenuLinks = () => {
   return (
-    <>
-      <ul className={styles.menuBar}>
-        <li>
-          <Anchor to='/' className={clsx(styles.menuBarItem, "contrast")}>
-            <strong>بازگشت به سایت</strong>
-          </Anchor>
-        </li>
-        <li>
-          <Anchor
-            to='/auth/logout'
-            className={clsx(styles.menuBarItem, "contrast")}
-          >
-            <strong>خروج</strong>
-          </Anchor>
-        </li>
-      </ul>
-    </>
+    <ul>
+      <li>
+        <Anchor
+          to='/panel/blog'
+          className={clsx(styles.menuBarItem, "contrast")}
+        >
+          <strong>مدیریت بلاگ</strong>
+        </Anchor>
+      </li>
+      <li>
+        <Anchor
+          to='/panel/faq'
+          className={clsx(styles.menuBarItem, "contrast")}
+        >
+          <strong>مدیریت پرسشهای پرتکرار</strong>
+        </Anchor>
+      </li>
+    </ul>
   );
 };

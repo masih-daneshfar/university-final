@@ -19,7 +19,15 @@ import clsx from "clsx";
 export const EDITOR_JS_TOOLS = {
   list: List,
   linkTool: LinkTool,
-  image: Image,
+  image: {
+    class: Image,
+    config: {
+      endpoints: {
+        byFile: `http://${window.location.hostname}:3001/file/new`, // Your backend file uploader endpoint
+      },
+      types:'image/png,image/jpg',
+    },
+  },
   header: Header,
   quote: Quote,
   checklist: CheckList,

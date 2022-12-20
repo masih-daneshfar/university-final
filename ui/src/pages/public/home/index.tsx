@@ -1,10 +1,11 @@
-import SinglePostLayout from "@layouts/singlePost";
+
+import Editor from "@components/editor";
 import WithSidebarLayout from "@layouts/withSidebar";
 
 export default function HomePage() {
   return (
     <WithSidebarLayout>
-      <SinglePostLayout />
+      <Editor readOnly />
     </WithSidebarLayout>
   );
 }

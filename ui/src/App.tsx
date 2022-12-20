@@ -1,9 +1,11 @@
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 import DefaultLayout from "@layouts/default";
 import PanelLayout from "@layouts/panel";
 import AdminBlogListPage from "@pages/admin/AdminBlogList";
 import ArtistListPage from "@pages/public/artistList";
 import ArtistPostPage from "@pages/public/artistPost";
-import AuthPage from "@pages/auth";
+import AuthLoginPage from "@pages/auth/login";
 import BlogListPage from "@pages/public/blogList";
 import BlogPostPage from "@pages/public/blogPost";
 import ClassesPage from "@pages/public/classes";
@@ -11,10 +13,12 @@ import FaqPage from "@pages/public/faq";
 import GalleryPage from "@pages/public/gallery";
 import GalleryPostPage from "@pages/public/galleryPost";
 import HomePage from "@pages/public/home";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AdminBlogPostPage from "@pages/admin/adminBlogPost";
-
-
+import GlobalContextProvider from "context";
+import AdminNewBlogPostPage from "@pages/admin/adminNewBlogPost";
+import AdminFaqListPage from "@pages/admin/AdminFaqList";
+import AdminNewFaq from "@pages/admin/adminNewFaq";
+import AdminFaqItem from "@pages/admin/adminFaqItem";
 
 const router = createBrowserRouter([
   {
@@ -58,8 +62,8 @@ const router = createBrowserRouter([
         element: <GalleryPostPage />,
       },
       {
-        path: "/auth",
-        element: <AuthPage />,
+        path: "/auth/login",
+        element: <AuthLoginPage />,
       },
     ],
   },
@@ -75,13 +79,31 @@ const router = createBrowserRouter([
         path: "/panel/blog/:id",
         element: <AdminBlogPostPage />,
       },
+      {
+        path: "/panel/blog/new",
+        element: <AdminNewBlogPostPage />,
+      },
+      {
+        path: "/panel/faq",
+        element: <AdminFaqListPage />,
+      },
+      {
+        path: "/panel/faq/:id",
+        element: <AdminFaqItem />,
+      },
+      {
+        path: "/panel/faq/new",
+        element: <AdminNewFaq />,
+      },
     ],
   },
 ]);
 function App() {
-  return (<>
-    <RouterProvider router={router} />
-  </>
+  return (
+    <GlobalContextProvider>
+      <RouterProvider router={router} />
+      <Toaster />
+    </GlobalContextProvider>
   );
 }
 

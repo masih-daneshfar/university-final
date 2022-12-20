@@ -1,30 +1,74 @@
+import {
+  getBlogSinglePostApiCall,
+  removeBlogSinglePostApiCall,
+  updateBlogSinglePostApiCall,
+} from "@api/apis";
 import Editor from "@components/editor";
-import { useState } from "react";
+import { FormEventHandler, useCallback, useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
+import { useNavigate, useParams } from "react-router-dom";
 import styles from "./adminBlogPostPage.module.css";
 
-interface AdminBlogPostPageType {
-  title?: string;
-  body?: string;
-  description?: string;
-  banner?: string;
-  id?: string;
-}
-export default function AdminBlogPostPage({
-  title,
-  banner,
-  body: orgBody,
-  description,
-  id,
-}: AdminBlogPostPageType) {
+type postEntity = Awaited<ReturnType<typeof getBlogSinglePostApiCall>>;
+
+export default function AdminBlogPostPage() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [post, setPost] = useState<Omit<postEntity, "id">>({
+    body: "",
+    created_at: "",
+    description: "",
+    title: "",
+  });
   const [body, setBody] = useState<string>();
+  useEffect(() => {
+    (async () => {
+      const post = await getBlogSinglePostApiCall(Number(id));
+      setPost(post);
+      setBody(post.body || "{}");
+    })();
+  }, [id]);
+
+  const onInputChange = ({
+    key,
+    data,
+  }: {
+    key: keyof postEntity;
+    data: any;
+  }) => {
+    setPost((prev) => ({
+      ...prev,
+      [key]: data,
+    }));
+  };
+
+  const onPostSubmit: FormEventHandler<HTMLFormElement> = useCallback(
+    async (event) => {
+      event.preventDefault();
+      if (post) {
+        await updateBlogSinglePostApiCall({
+          ...post,
+          id: Number(id!),
+          body: body,
+        });
+        toast.success("پست با موفقیت آپدیت شد");
+      } else toast.error("آپدیت پست با اشکال مواجه شد!");
+    },
+    [body, post, id]
+  );
+
+  const onPostRemove = useCallback(async () => {
+    if (post) {
+      await removeBlogSinglePostApiCall(Number(id));
+      toast.success("پست با موفقیت حذف شد");
+      navigate("/panel/blog");
+    } else toast.error("حذف پست با اشکال مواجه شد!");
+  }, [id, navigate, post]);
 
   return (
-    <form className='container'>
-      {title ? (
-        <h2 className={styles.mainTitle}>ویرایش پست</h2>
-      ) : (
-        <h2 className={styles.mainTitle}>ایجاد پست</h2>
-      )}
+    <form className='container' onSubmit={onPostSubmit}>
+      <h2 className={styles.mainTitle}>ویرایش پست</h2>
+
       <hr />
       <label htmlFor='title'>
         سر تیتر
@@ -33,7 +77,10 @@ export default function AdminBlogPostPage({
           id='title'
           name='title'
           placeholder='سرتیتر پست'
-          defaultValue={title}
+          value={post?.title}
+          onChange={(event) => {
+            onInputChange({ key: "title", data: event.target.value });
+          }}
           required
         />
       </label>
@@ -43,19 +90,11 @@ export default function AdminBlogPostPage({
           id='description'
           placeholder='چکیده پست ...'
           required
-          defaultValue={description}
+          value={post?.description}
+          onChange={(event) => {
+            onInputChange({ key: "description", data: event.target.value });
+          }}
           rows={5}
-        />
-      </label>
-      <label htmlFor='banner'>
-        تصویرک بنر
-        <input
-          id='banner'
-          value={banner}
-          placeholder='تصویرک پست ...'
-          required
-          name='banner'
-          type='file'
         />
       </label>
       <h5>بدنه پست</h5>
@@ -63,18 +102,19 @@ export default function AdminBlogPostPage({
 
       <input hidden name='body' value={body} />
 
-      <Editor
-        defaultValue={JSON.parse(orgBody || '{"blocks":[]}')}
-        onChange={async (api) => {
-          const data = await api.saver.save();
-          setBody(JSON.stringify(data.blocks));
-        }}
-      />
-
+      {body && (
+        <Editor
+          defaultValue={JSON.parse(body || '{"blocks":[]}')}
+          onChange={async (api) => {
+            const data = await api.saver.save();
+            setBody(JSON.stringify(data));
+          }}
+        />
+      )}
       <button type='submit' className=''>
-        ثبت
+        آپدیت پست
       </button>
-      <button type='submit' className='contrast' name='remove'>
+      <button type='button' className='contrast' onClick={onPostRemove}>
         حذف
       </button>
     </form>

@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
 @Entity()
 export class File {
@@ -7,6 +7,9 @@ export class File {
 
   @Column({ unique: true })
   name: string;
+
+  @Column({})
+  extension: string;
 
   @Column("timestamp", { default: () => "CURRENT_TIMESTAMP()" })
   created_at: Date;

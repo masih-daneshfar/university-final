@@ -1,16 +1,27 @@
+import { getAllFaqApiCall } from "@api/apis";
 import Accordion from "@components/accordion";
 import WithSidebarLayout from "@layouts/withSidebar";
+import { useEffect, useState } from "react";
 import styles from "./faqPage.module.css";
 
 export default function FaqPage() {
+  const [faqs, setFaqs] = useState<
+    Awaited<ReturnType<typeof getAllFaqApiCall>>
+  >([]);
+  useEffect(() => {
+    (async () => {
+      const posts = await getAllFaqApiCall();
+      setFaqs(posts);
+    })();
+  }, []);
   return (
     <WithSidebarLayout>
       <h2 className={styles.mainTitle}>پرسشهای پرتکرار</h2>
       <hr />
-      {[1, 2, 3, 4, 5, 4, 4, 33, 3, 3, 3, 3].map(() => (
-        <>
-          <Accordion title='یک تیتیر' />
-        </>
+      {faqs.map((faq) => (
+        <Accordion key={`faq-${faq.id}`} title={faq.title}>
+          {faq.description}
+        </Accordion>
       ))}
     </WithSidebarLayout>
   );
