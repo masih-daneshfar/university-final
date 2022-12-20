@@ -1,16 +1,30 @@
+import { getAllTeachersApiCall } from "@api/apis";
 import ArtistItem from "@components/artistItem";
 import WithSidebarLayout from "@layouts/withSidebar";
+import { useEffect, useState } from "react";
 import styles from "./artistListPage.module.css";
 
+type teachersEntity = Awaited<ReturnType<typeof getAllTeachersApiCall>>;
 export default function ArtistListPage() {
+  const [teachers, setTeachers] = useState<teachersEntity>([]);
+  useEffect(() => {
+    (async () => {
+      const teachers = await getAllTeachersApiCall();
+      setTeachers(teachers);
+    })();
+  }, []);
   return (
     <WithSidebarLayout>
       <h2 className={styles.mainTitle}>لیست اساتید</h2>
       <hr />
-      {[1, 2, 3, 4, 5, 4, 4, 33, 3, 3, 3, 3].map(() => (
-        <>
-          <ArtistItem title='استاد' avatarUrl='https://i.pravatar.cc/300' href="/artists/1" summery="asjdahs dhash djahsd akjsdhash dkasjdhaksdhakjsd" />
-        </>
+      {teachers.map((teacher) => (
+        <ArtistItem
+          key={`gallery-${teacher.id}`}
+          title={teacher.fullName}
+          avatarUrl={teacher.avatar.name}
+          href={`/artists/${teacher.id}`}
+          summery={teacher.description}
+        />
       ))}
     </WithSidebarLayout>
   );

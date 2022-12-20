@@ -15,9 +15,6 @@ const FooterLayout = () => {
         <Anchor to='/about-us' muted>
           درباره ما
         </Anchor>
-        <Anchor to='/tests' muted>
-          آزمون آنلاین
-        </Anchor>
       </small>
       <p className={styles.copyright}>
         © 2022 تمام حقوق مربوط به این وب سایت برای آموزشگاه موسیقی محفوظ است

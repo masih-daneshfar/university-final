@@ -45,6 +45,14 @@ interface subscribeResponseType {
   fullName: string;
   created_at: string;
 }
+interface teacherResponseType {
+  id: number;
+  fullName: string;
+  description: string;
+  avatar: fileType;
+  body: string;
+  created_at: string;
+}
 
 export const subscribeApiCall = async (
   data: Pick<subscribeResponseType, "email" | "fullName">
@@ -216,4 +224,39 @@ export const removeGallerySingleApiCall = async (galleryID: number) => {
   return fetcher(`/gallery/remove/${galleryID}`, {
     method: "delete",
   }) as Promise<galleryResponseType>;
+};
+
+export const getAllTeachersApiCall = async () => {
+  return fetcher(`/teacher`, {
+    method: "get",
+  }) as Promise<teacherResponseType[]>;
+};
+export const getSingleTeacherApiCall = async (galleryID: number) => {
+  return fetcher(`/teacher/${galleryID}`, {
+    method: "get",
+  }) as Promise<teacherResponseType>;
+};
+
+export const newTeacherPostApiCall = async ({
+  ...data
+}: Omit<teacherResponseType, "id" | "created_at">) => {
+  return fetcher(`/teacher/new`, {
+    method: "post",
+    body: JSON.stringify(data),
+  }) as Promise<teacherResponseType>;
+};
+export const updateTeacherPostApiCall = async ({
+  id,
+  ...data
+}: Partial<Omit<teacherResponseType, "created_at">>) => {
+  return fetcher(`/teacher/update/${id}`, {
+    method: "put",
+    body: JSON.stringify(data),
+  }) as Promise<teacherResponseType>;
+};
+
+export const removeTeacherSingleApiCall = async (galleryID: number) => {
+  return fetcher(`/teacher/remove/${galleryID}`, {
+    method: "delete",
+  }) as Promise<teacherResponseType>;
 };

@@ -22,6 +22,9 @@ import AdminFaqItem from "@pages/admin/adminFaqItem";
 import AdminGalleryListPage from "@pages/admin/AdminGalleryList";
 import AdminNewGalleryPage from "@pages/admin/adminNewGallery";
 import AdminGalleryPostPage from "@pages/admin/adminGalleryPost";
+import AdminArtistListPage from "@pages/admin/AdminArtistList";
+import AdminArtistPostPage from "@pages/admin/adminArtistPost";
+import AdminNewArtistPostPage from "@pages/admin/adminNewArtistPost";
 
 const router = createBrowserRouter([
   {
@@ -109,6 +112,18 @@ const router = createBrowserRouter([
       {
         path: "/panel/gallery/:id",
         element: <AdminGalleryPostPage />,
+      },
+      {
+        path: "/panel/artist",
+        element: <AdminArtistListPage />,
+      },
+      {
+        path: "/panel/artist/new",
+        element: <AdminNewArtistPostPage />,
+      },
+      {
+        path: "/panel/artist/:id",
+        element: <AdminArtistPostPage />,
       },
     ],
   },

@@ -12,7 +12,7 @@ function ArtistItem({ href = "", summery, title,avatarUrl }: ArtistItemType) {
     <>
       <div className={styles.artistContainer}>
         <div className={styles.artistAvatar}>
-          <img src={avatarUrl} alt='' />
+          <img src={`http://localhost:3001/uploads/${avatarUrl}`} alt='' />
         </div>
         <div className={styles.artistInfoContainer}>
           <h3 className={styles.artistTitle}>{title}</h3>
