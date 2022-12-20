@@ -1,0 +1,9 @@
+.container {
+    margin-block-start: 2rem;
+    text-align: center;
+}
+
+.copyright {
+    color: var(--muted-color);
+    font-size: .8rem;
+}
