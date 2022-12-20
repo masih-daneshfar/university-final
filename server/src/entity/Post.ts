@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from "typeorm"
+import { File } from "./File";
 
 @Entity()
 export class Post {
@@ -6,6 +7,11 @@ export class Post {
   id: number;
   @Column("varchar", { length: 200 })
   title: string;
+
+  @OneToOne(() => File)
+  @JoinColumn()
+  banner: File;
+
 
   @Column("text")
   description: string;
