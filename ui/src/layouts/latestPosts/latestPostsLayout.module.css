@@ -1,0 +1,7 @@
+.mainTitle {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+  font-size: clamp(1.1rem, 1.6vw, 1.2rem);
+  color: var(--secondary);
+}
