@@ -1,0 +1,43 @@
+.container {
+  margin-block: 2rem;
+  min-height: 20rem;
+  background-image: url("../../assets/images/menu-banner.jpg");
+  background-position: 50% 100%;
+  background-size: cover;
+  border-radius: 0.7rem;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.logoAnchor {
+  font-size: 1.4rem;
+  margin-inline-start: 4.5rem;
+  margin-block-start: 2rem;
+}
+.menuBar {
+  background-color: var(--muted-border-color);
+  border-top-left-radius: 0.7rem;
+  border-top-right-radius: 0.7rem;
+  column-gap: 2rem;
+  padding-block: 0.2rem;
+  padding-inline: 0.4rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-inline: auto !important;
+  width: 100%;
+}
+.menuBarItem {
+  color: var(--muted-color);
+  border-bottom: 1px solid transparent;
+  transition: all 0.3s;
+  border-radius: 0;
+  cursor: pointer;
+  font-size: .8rem;
+
+  border-top-left-radius: var(--border-radius);
+  border-top-right-radius: var(--border-radius);
+}
+.menuBarItem:hover {
+  color: var(--color);
+  border-bottom: 1px solid var(--color);
+}
