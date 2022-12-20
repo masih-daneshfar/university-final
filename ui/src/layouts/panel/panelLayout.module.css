@@ -1,0 +1,7 @@
+.container {
+    min-height: calc(100vh - 1rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+}
