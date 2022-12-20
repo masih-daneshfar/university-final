@@ -1,0 +1,20 @@
+.gridContainer {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+.gridContainer > section {
+width: 70%;
+padding-inline: 1rem;
+}
+
+.gridContainer > aside {
+width: 30%;
+}
+
+@media screen and (max-width:992px) {
+    .gridContainer> aside,.gridContainer> section {
+        width: 100%;
+    }
+}
