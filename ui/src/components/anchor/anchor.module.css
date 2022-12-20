@@ -1,0 +1,14 @@
+.anchor {
+  padding-block: 0.2rem;
+  padding-inline: 0.5rem;
+  display: inline-block;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.anchor[class*="active"] {
+  font-weight: 500;
+  color: var(--color);
+}
