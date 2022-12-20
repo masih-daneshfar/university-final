@@ -5,6 +5,7 @@ import { AppDataSource } from "./config/data-source";
 import UserRoute from "./route/user.route";
 import PostRoute from "./route/post.route";
 import FileRoute from "./route/file.route";
+import FaqRoute from "./route/faq.route";
 import ErrorHandlingMiddleware from "./middlewares/errorHandler.mw";
 
 // establish database connection
@@ -35,6 +36,7 @@ app.use(fileUpload({
 app.use("/posts", PostRoute);
 app.use("/file", FileRoute);
 app.use("/user", UserRoute);
+app.use("/faq", FaqRoute);
 
 // error handling
 app.use(ErrorHandlingMiddleware);
