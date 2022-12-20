@@ -1,0 +1,13 @@
+.editorContainer {
+  width: 100%;
+}
+.editorContainer [class="ce-block__content"] {
+  max-width: calc(100% - 2rem);
+}
+
+.editorContainerReadOnly
+  [class*="image-tool"]
+  [class="cdx-input image-tool__caption"],
+.editorContainerReadOnly [class*="image-tool"] [class="cdx-button"] {
+  display: none;
+}
