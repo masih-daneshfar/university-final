@@ -1,0 +1,26 @@
+
+.socialMediaContainer {
+    margin-block: 4rem;
+    display: flex;
+    justify-content: space-around;
+}
+
+.socialMediaIcon {
+    aspect-ratio: 1;
+    width: 3rem;
+}
+
+.trustSignContainer {
+    margin-block: 3rem;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    text-align: center;
+}
+
+.trustSignIcon {
+    aspect-ratio: 1;
+    width: 90%;
+    border-radius: .7rem;
+    background-color: var(--contrast);
+}
