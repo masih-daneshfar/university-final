@@ -7,7 +7,9 @@ import AuthRoute from "./route/auth.route";
 import UserRoute from "./route/user.route";
 import PostRoute from "./route/post.route";
 import FileRoute from "./route/file.route";
+import SubscribeRoute from "./route/subscribe.route";
 import FaqRoute from "./route/faq.route";
+import GalleryRoute from "./route/gallery.route";
 import ErrorHandlingMiddleware from "./middlewares/errorHandler.mw";
 import SessionMiddleware from "./middlewares/session.mw";
 import AuthMiddleware from "./middlewares/auth.mw";
@@ -36,7 +38,7 @@ app.use(
       "Content-Type, Access-Control-Request-Method",
       "Access-Control-Request-Headers",
     ],
-    origin: ["http://localhost:3000", "http://localhost:3001"],
+    origin: ["http://localhost:3000", "http://localhost:3001","http://192.168.1.103:3000"],
   })
 );
 app.set("trust proxy", 1);
@@ -60,8 +62,10 @@ app.use(SessionMiddleware);
 app.use("/auth", AuthRoute);
 app.use("/user", AuthMiddleware(), UserRoute);
 app.use("/post", PostRoute);
-app.use("/file",AuthMiddleware(), FileRoute);
+app.use("/file", FileRoute);
 app.use("/faq", FaqRoute);
+app.use("/gallery", GalleryRoute);
+app.use("/subscribe", SubscribeRoute);
 
 // error handling
 app.use(ErrorHandlingMiddleware);

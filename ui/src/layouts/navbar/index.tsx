@@ -135,6 +135,14 @@ const NavbarAdminMenuLinks = () => {
           <strong>مدیریت پرسشهای پرتکرار</strong>
         </Anchor>
       </li>
+      <li>
+        <Anchor
+          to='/panel/gallery'
+          className={clsx(styles.menuBarItem, "contrast")}
+        >
+          <strong>مدیریت گالری‌ها</strong>
+        </Anchor>
+      </li>
     </ul>
   );
 };

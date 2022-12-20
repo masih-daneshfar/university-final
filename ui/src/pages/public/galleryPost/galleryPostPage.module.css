@@ -1,0 +1,9 @@
+.galleryBanner {
+    border-radius: 1.5rem;
+    margin:1rem;
+    max-width: calc(100% - 2rem);
+}
+.galleryDescription {
+    padding-block: 1rem;
+    
+}

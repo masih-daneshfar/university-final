@@ -19,6 +19,9 @@ import AdminNewBlogPostPage from "@pages/admin/adminNewBlogPost";
 import AdminFaqListPage from "@pages/admin/AdminFaqList";
 import AdminNewFaq from "@pages/admin/adminNewFaq";
 import AdminFaqItem from "@pages/admin/adminFaqItem";
+import AdminGalleryListPage from "@pages/admin/AdminGalleryList";
+import AdminNewGalleryPage from "@pages/admin/adminNewGallery";
+import AdminGalleryPostPage from "@pages/admin/adminGalleryPost";
 
 const router = createBrowserRouter([
   {
@@ -94,6 +97,18 @@ const router = createBrowserRouter([
       {
         path: "/panel/faq/new",
         element: <AdminNewFaq />,
+      },
+      {
+        path: "/panel/gallery",
+        element: <AdminGalleryListPage />,
+      },
+      {
+        path: "/panel/gallery/new",
+        element: <AdminNewGalleryPage />,
+      },
+      {
+        path: "/panel/gallery/:id",
+        element: <AdminGalleryPostPage />,
       },
     ],
   },

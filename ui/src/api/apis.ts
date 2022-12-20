@@ -15,6 +15,45 @@ interface faqResponseType {
   title: string;
   description: string;
 }
+interface fileType {
+  id: number;
+  name: string;
+  extension: string;
+}
+interface uploadFileResponseType {
+  created_at: string;
+  extension: string;
+  id: number;
+  name: string;
+  url: string;
+}
+interface uploadSingleResponseType {
+  file: uploadFileResponseType;
+}
+
+interface galleryResponseType {
+  id: number;
+  title: string;
+  description: string;
+  banner?: fileType;
+  images: fileType[];
+  created_at: string;
+}
+interface subscribeResponseType {
+  id: number;
+  email: string;
+  fullName: string;
+  created_at: string;
+}
+
+export const subscribeApiCall = async (
+  data: Pick<subscribeResponseType, "email" | "fullName">
+) => {
+  return fetcher(`/subscribe/new`, {
+    method: "post",
+    body: JSON.stringify(data),
+  }) as Promise<galleryResponseType>;
+};
 
 export const loginApiCall = async (
   loginData: { username: string; password: string },
@@ -55,6 +94,14 @@ export const getProfileApiCall = async () => {
       role: "ADMIN" | "USER";
     };
   }>;
+};
+
+export const uploadFiles = async (formData: FormData) => {
+  return fetcher("/file/new", {
+    method: "post",
+    body: formData,
+    headers: {},
+  }) as Promise<uploadSingleResponseType | uploadFileResponseType[]>;
 };
 
 export const getLatestPostsApiCall = async () => {
@@ -113,7 +160,7 @@ export const getSingleFaqApiCall = async (faqID: number) => {
 
 export const newFaqItemApiCall = async ({
   ...data
-}: Omit<faqResponseType,"id"| "created_at">) => {
+}: Omit<faqResponseType, "id" | "created_at">) => {
   return fetcher(`/faq/new`, {
     method: "post",
     body: JSON.stringify(data),
@@ -124,7 +171,7 @@ export const updateFaqItemApiCall = async ({
   id,
   ...data
 }: Omit<faqResponseType, "created_at">) => {
-  return fetcher(`/faq/${id}`, {
+  return fetcher(`/faq/update/${id}`, {
     method: "put",
     body: JSON.stringify(data),
   }) as Promise<faqResponseType>;
@@ -134,4 +181,39 @@ export const removeFaqApiCall = async (faqID: number) => {
   return fetcher(`/faq/remove/${faqID}`, {
     method: "delete",
   }) as Promise<faqResponseType[]>;
+};
+
+export const getAllGalleriesApiCall = async () => {
+  return fetcher(`/gallery`, {
+    method: "get",
+  }) as Promise<galleryResponseType[]>;
+};
+export const getSingleGalleryApiCall = async (galleryID: number) => {
+  return fetcher(`/gallery/${galleryID}`, {
+    method: "get",
+  }) as Promise<galleryResponseType>;
+};
+
+export const newGalleryPostApiCall = async ({
+  ...data
+}: Omit<galleryResponseType, "id" | "created_at">) => {
+  return fetcher(`/gallery/new`, {
+    method: "post",
+    body: JSON.stringify(data),
+  }) as Promise<galleryResponseType>;
+};
+export const updateGalleryPostApiCall = async ({
+  id,
+  ...data
+}: Partial<Omit<galleryResponseType, "created_at">>) => {
+  return fetcher(`/gallery/update/${id}`, {
+    method: "put",
+    body: JSON.stringify(data),
+  }) as Promise<galleryResponseType>;
+};
+
+export const removeGallerySingleApiCall = async (galleryID: number) => {
+  return fetcher(`/gallery/remove/${galleryID}`, {
+    method: "delete",
+  }) as Promise<galleryResponseType>;
 };

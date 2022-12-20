@@ -4,28 +4,32 @@ import * as fs from "fs";
 import { AppDataSource } from "../config/data-source";
 import { File } from "../entity/File";
 import { RequestWithFiles } from "../types";
+import AuthMiddleware from "../middlewares/auth.mw";
 
-function loadFile(...path:string[]) {
-  return fs.readFileSync(
-    join(...path)
-  );
+function loadFile(...path: string[]) {
+  return fs.readFileSync(join(...path));
 }
 
 const router = Router();
 // register routes
-router.get("/", async function (req: Request, res: Response, next) {
-  try {
-    const results = await AppDataSource.getRepository(File).find();
-    return res.send(results);
-  } catch (error) {
-    const err = JSON.parse(
-      JSON.stringify(error, Object.getOwnPropertyNames(error))
-    );
-    next({ ...err, statusCode: 400 });
+router.get(
+  "/",
+  AuthMiddleware(),
+  async function (req: Request, res: Response, next) {
+    try {
+      const results = await AppDataSource.getRepository(File).find();
+      return res.send(results);
+    } catch (error) {
+      const err = JSON.parse(
+        JSON.stringify(error, Object.getOwnPropertyNames(error))
+      );
+      next({ ...err, statusCode: 400 });
+    }
   }
-});
+);
 router.get(
   "/static/:name",
+  AuthMiddleware(),
   async function ({ body }: Request, res: Response, next) {
     try {
       const staticFileRecord = await AppDataSource.getRepository(
@@ -79,8 +83,14 @@ router.post(
           name: `${Date.now()}-${flattedFiles[idx].name}`,
           extension: flattedFiles[idx].mimetype,
         });
-        await AppDataSource.getRepository(File).save(file);
-        savedFiles.push({ success: 1, file: { url: `http://localhost:3001/uploads/${file.name}` } });
+        const savedFile = await AppDataSource.getRepository(File).save(file);
+        savedFiles.push({
+          success: 1,
+          file: {
+            url: `http://localhost:3001/uploads/${file.name}`,
+            ...savedFile,
+          },
+        });
         await flattedFiles[idx].mv(
           join(process.cwd(), "public", "uploads", file.name),
           (err) => {
@@ -88,9 +98,8 @@ router.post(
           }
         );
       }
-      if(savedFiles.length === 1)
-      return res.json(savedFiles[0]);
-      return res.json(savedFiles.map((i) => i.name));
+      if (savedFiles.length === 1) return res.json(savedFiles[0]);
+      return res.json(savedFiles.map((file) => file.file));
     } catch (error) {
       const err = JSON.parse(
         JSON.stringify(error, Object.getOwnPropertyNames(error))
@@ -100,9 +109,15 @@ router.post(
   }
 );
 
-router.delete("/remove/:id", async function (req: Request, res: Response) {
-  const results = await AppDataSource.getRepository(File).delete(req.params.id);
-  return res.send(results);
-});
+router.delete(
+  "/remove/:id",
+  AuthMiddleware(),
+  async function (req: Request, res: Response) {
+    const results = await AppDataSource.getRepository(File).delete(
+      req.params.id
+    );
+    return res.send(results);
+  }
+);
 
 export default router;

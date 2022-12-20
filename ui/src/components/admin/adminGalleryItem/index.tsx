@@ -1,18 +1,14 @@
 import Anchor from "@components/anchor";
-import styles from "./galleryItem.module.css";
+import styles from "./adminGalleryItem.module.css";
 
-interface GalleryItemType {
-  title?: string;
-  summery?: string;
-  href?: string;
+interface AdminGalleryItemType {
+  title: string;
+  summery: string;
+  href: string;
   avatarUrl?: string;
+  id: number;
 }
-function GalleryItem({
-  href = "",
-  summery,
-  title,
-  avatarUrl,
-}: GalleryItemType) {
+function AdminGalleryItem({ href = "", summery, title,avatarUrl }: AdminGalleryItemType) {
   return (
     <>
       <div className={styles.galleryContainer}>
@@ -22,11 +18,13 @@ function GalleryItem({
         <div className={styles.galleryInfoContainer}>
           <h3 className={styles.galleryTitle}>{title}</h3>
           <p className={styles.gallerySummery}>{summery}</p>
-          <Anchor to={href}>باقی تصاویر ...</Anchor>
+          <Anchor role='button' to={href} contrast fullWidth>
+            ویرایش
+          </Anchor>
         </div>
       </div>
     </>
   );
 }
 
-export default GalleryItem;
+export default AdminGalleryItem;

@@ -1,16 +1,16 @@
 const fetcher = async (
   input: RequestInfo | URL,
-  init: RequestInit | undefined = {}
+  { ...init }: RequestInit | undefined = {}
 ) => {
-  return fetch(`http://${window.location.hostname}:3001${input}`, {
+  const response = await fetch(`http://${window.location.hostname}:3001${input}`, {
     mode: "cors",
     credentials: "include",
     headers: { "content-type": "application/json" },
     ...init,
-  }).then((res) => {
+  })
     //   res.headers.
-    return res.json();
-  });
+    return response.json();
+  
 };
 
 export default fetcher;

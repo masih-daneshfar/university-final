@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToMany,
+  JoinTable,
+} from "typeorm";
+import { Gallery } from "./Gallery";
 
 @Entity()
 export class File {
@@ -11,6 +18,10 @@ export class File {
   @Column({})
   extension: string;
 
+  @ManyToMany(() => Gallery)
+  @JoinTable()
+  galleryImages: Gallery[];
+  
   @Column("timestamp", { default: () => "CURRENT_TIMESTAMP()" })
   created_at: Date;
 }

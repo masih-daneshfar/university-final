@@ -11,7 +11,7 @@ const SessionMiddleware = session({
     maxAge: 3600000,
     signed: false,
     // sameSite: "strict",
-    domain: "localhost",
+    // domain: "localhost",
     path: "/",
   },
 });
