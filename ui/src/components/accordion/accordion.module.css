@@ -1,0 +1,18 @@
+.accordionContainer {
+  margin-block: 3rem;
+  margin-inline: 1rem;
+  transition: all 0.3s;
+}
+.accordionContainer:hover,.accordionContainer[open] {
+  background-color: var(--muted-border-color);
+}
+
+.accordionTitle {
+  padding-inline: .5rem;
+  padding-block: 1rem;
+}
+
+.AccordionContentContainer {
+  margin-block-start: 2rem;
+  padding-inline: 3rem;
+}
