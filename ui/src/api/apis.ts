@@ -4,6 +4,7 @@ import { toast } from "react-hot-toast";
 interface postResponseType {
   id: number;
   title: string;
+  type?: "about" | "home" | "normal";
   description: string;
   body: string;
   banner?: { name: string };
@@ -54,13 +55,32 @@ interface teacherResponseType {
   created_at: string;
 }
 
+export enum Days {
+  Saturday = "شنبه",
+  Sunday = "یک‌شنبه",
+  Monday = "دو‌شنبه",
+  Tuesday = "سه‌شنبه",
+  Wednesday = "چهار‌شنبه",
+  thursday = "پنج‌شنبه",
+  Friday = "جمعه",
+}
+
+interface classResponseType {
+  id: number;
+  title: string;
+  description: string;
+  days: Days[];
+  teachers: Omit<teacherResponseType, "body" | "avatar" | "created_at">[];
+  created_at: string;
+}
+
 export const subscribeApiCall = async (
   data: Pick<subscribeResponseType, "email" | "fullName">
 ) => {
   return fetcher(`/subscribe/new`, {
     method: "post",
     body: JSON.stringify(data),
-  }) as Promise<galleryResponseType>;
+  }) as Promise<void>;
 };
 
 export const loginApiCall = async (
@@ -78,9 +98,10 @@ export const loginApiCall = async (
     toast.error(String(error));
   }
 };
-export const signupApiCall = async (
-  signupData: { username: string; password: string },
-) => {
+export const signupApiCall = async (signupData: {
+  username: string;
+  password: string;
+}) => {
   return fetcher("/auth/signup", {
     method: "post",
     body: JSON.stringify(signupData),
@@ -127,8 +148,21 @@ export const getLatestPostsApiCall = async () => {
   }) as Promise<postResponseType[]>;
 };
 
-export const getAllPostsApiCall = async () => {
+export const getPostByTypeApiCall = async (
+  postType: postResponseType["type"]
+) => {
+  return fetcher(`/post/type/${postType}`, {
+    method: "get",
+  }) as Promise<postResponseType>;
+};
+
+export const getBlogPostsApiCall = async () => {
   return fetcher("/post", {
+    method: "get",
+  }) as Promise<postResponseType[]>;
+};
+export const getAllPostsApiCall = async () => {
+  return fetcher("/post/all", {
     method: "get",
   }) as Promise<postResponseType[]>;
 };
@@ -240,6 +274,11 @@ export const getAllTeachersApiCall = async () => {
     method: "get",
   }) as Promise<teacherResponseType[]>;
 };
+export const getAllTeachersListApiCall = async () => {
+  return fetcher(`/teacher/list`, {
+    method: "get",
+  }) as Promise<teacherResponseType[]>;
+};
 export const getSingleTeacherApiCall = async (galleryID: number) => {
   return fetcher(`/teacher/${galleryID}`, {
     method: "get",
@@ -268,4 +307,40 @@ export const removeTeacherSingleApiCall = async (galleryID: number) => {
   return fetcher(`/teacher/remove/${galleryID}`, {
     method: "delete",
   }) as Promise<teacherResponseType>;
+};
+
+export const getAllClassesApiCall = async () => {
+  return fetcher(`/class`, {
+    method: "get",
+  }) as Promise<classResponseType[]>;
+};
+
+export const getSingleClassApiCall = async (classID: number) => {
+  return fetcher(`/class/${classID}`, {
+    method: "get",
+  }) as Promise<classResponseType>;
+};
+
+export const newClassItemApiCall = async ({
+  ...data
+}: Omit<classResponseType, "id" | "created_at">) => {
+  return fetcher(`/class/new`, {
+    method: "post",
+    body: JSON.stringify(data),
+  }) as Promise<classResponseType>;
+};
+export const updateSingleClassItemApiCall = async ({
+  id,
+  ...data
+}: Omit<classResponseType, "created_at">) => {
+  return fetcher(`/class/update/${id}`, {
+    method: "put",
+    body: JSON.stringify(data),
+  }) as Promise<classResponseType>;
+};
+
+export const removeClassSingleApiCall = async (classId: number) => {
+  return fetcher(`/class/remove/${classId}`, {
+    method: "delete",
+  }) as Promise<classResponseType>;
 };

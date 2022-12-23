@@ -13,6 +13,7 @@ export default function AdminNewBlogPostPage() {
     body: "{}",
     description: "",
     title: "",
+    type: "normal",
   });
   const [body, setBody] = useState<string>();
   const onInputChange = ({
@@ -70,6 +71,29 @@ export default function AdminNewBlogPostPage() {
           rows={5}
         />
       </label>
+
+      <label htmlFor='postType'> نوع پست</label>
+      <select
+        id='postType'
+        name='type'
+        onChange={(event) => {
+          onInputChange({
+            key: "type",
+            data: event.target.selectedOptions[0].value,
+          });
+        }}
+      >
+        <option value='' selected={post?.type === "normal"}>
+          پست معمولی
+        </option>
+        <option value='home' selected={post?.type === "home"}>
+          خانه
+        </option>
+        <option value='about' selected={post?.type === "about"}>
+          درباره ما
+        </option>
+      </select>
+
       <h5>بدنه پست</h5>
       <hr />
 

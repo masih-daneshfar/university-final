@@ -13,7 +13,7 @@ function Table({ headTitles = [], rows = [] }: TableType) {
           <thead>
             <tr>
               {headTitles.map((headTitle, idx) => (
-                <th scope='col' key={idx}>
+                <th scope='col' key={`thead-${idx}`}>
                   {headTitle}
                 </th>
               ))}
@@ -24,10 +24,10 @@ function Table({ headTitles = [], rows = [] }: TableType) {
         {rows && (
           <tbody>
             {rows.map((row, idx) => (
-              <tr>
-                {row.map((rowColumn) => (
-                  <th scope='row' key={`row-${idx}`}>
-                    <td key={`row-col-${idx}`}>{rowColumn}</td>
+              <tr key={`col--${idx}`}>
+                {row.map((rowColumn, jdx) => (
+                  <th scope='row' key={`row-${idx}-${jdx}`}>
+                    <td key={`row-col--${idx}-${jdx}`}>{rowColumn}</td>
                   </th>
                 ))}
               </tr>

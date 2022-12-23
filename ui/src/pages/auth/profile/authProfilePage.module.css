@@ -1,0 +1,18 @@
+.profileContainer {
+    display: flex;
+    align-items: center;
+flex-direction: column;
+    
+}
+.profileInfoContainer {
+    width: 100%;
+    padding-inline: 3.5rem;
+}
+
+.profileInfo {
+    font-size: 1rem;
+    /* text-align: center; */
+}
+.profileClasses {
+    padding-block: 3rem;
+}

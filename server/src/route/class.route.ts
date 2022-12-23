@@ -1,33 +1,18 @@
 import { Request, Response, Router } from "express";
 import { AppDataSource } from "../config/data-source";
-import { Teacher } from "../entity/Teacher";
+import { Class } from "../entity/Class";
 import AuthMiddleware from "../middlewares/auth.mw";
 
 const router = Router();
 // register routes
 router.get("/", async function (req: Request, res: Response, next) {
   try {
-    const teachers = await AppDataSource.getRepository(Teacher).find({
-      relations: ["avatar", "classes"],
+    const classes = await AppDataSource.getRepository(Class).find({
+      relations: ["teachers"],
       order: { created_at: "DESC" },
+      select: { teachers: { body: false,id:true,fullName:true,description:true } },
     });
-    res.json(teachers);
-  } catch (error) {
-    const err = JSON.parse(
-      JSON.stringify(error, Object.getOwnPropertyNames(error))
-    );
-    next({ ...err, statusCode: 500 });
-  }
-});
-
-router.get("/list", async function (req: Request, res: Response, next) {
-  try {
-    const teachers = await AppDataSource.getRepository(Teacher).find({
-      relations: [],
-      order: { created_at: "DESC" },
-      select: { classes: true, fullName: true, id: true, created_at: true },
-    });
-    res.json(teachers);
+    res.json(classes);
   } catch (error) {
     const err = JSON.parse(
       JSON.stringify(error, Object.getOwnPropertyNames(error))
@@ -38,9 +23,12 @@ router.get("/list", async function (req: Request, res: Response, next) {
 
 router.get("/:id", async function (req: Request, res: Response, next) {
   try {
-    const result = await AppDataSource.getRepository(Teacher).findOneOrFail({
+    const result = await AppDataSource.getRepository(Class).findOneOrFail({
       where: { id: Number(req.params.id) },
-      relations: ["avatar", "classes"],
+      relations: ["teachers"],
+      select: {
+        teachers: { body: false, id: true, fullName: true, description: true },
+      },
     });
     return res.json(result);
   } catch (error) {
@@ -55,9 +43,9 @@ router.post(
   AuthMiddleware(),
   async function ({ body }: Request, res: Response, next) {
     try {
-      const newTeacher = AppDataSource.getRepository(Teacher).create(body);
-      await AppDataSource.getRepository(Teacher).save(newTeacher);
-      return res.json(newTeacher);
+      const newClass = AppDataSource.getRepository(Class).create(body);
+      await AppDataSource.getRepository(Class).save(newClass);
+      return res.json(newClass);
     } catch (error) {
       const err = JSON.parse(
         JSON.stringify(error, Object.getOwnPropertyNames(error))
@@ -71,13 +59,21 @@ router.put(
   AuthMiddleware(),
   async function ({ body, params }: Request, res: Response, next) {
     try {
-      await AppDataSource.getRepository(Teacher).update(params.id, {
+      await AppDataSource.getRepository(Class).update(params.id, {
         ...body,
       });
 
-      const results = await AppDataSource.getRepository(Teacher).findOneOrFail({
+      const results = await AppDataSource.getRepository(Class).findOneOrFail({
         where: { id: Number(params.id) },
-        relations: ["avatar", "classes"],
+        relations: ["teachers"],
+        select: {
+          teachers: {
+            body: false,
+            id: true,
+            fullName: true,
+            description: true,
+          },
+        },
       });
 
       return res.send(results);
@@ -95,7 +91,7 @@ router.delete(
   AuthMiddleware(),
   async function (req: Request, res: Response, next) {
     try {
-      const results = await AppDataSource.getRepository(Teacher).delete(
+      const results = await AppDataSource.getRepository(Class).delete(
         req.params.id
       );
       return res.send(results);

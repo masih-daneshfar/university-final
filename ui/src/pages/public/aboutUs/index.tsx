@@ -1,10 +1,10 @@
 import WithSidebarLayout from "@layouts/withSidebar";
 import SinglePostPage from "../singlePage";
 
-export default function HomePage() {
+export default function AboutUsPage() {
   return (
     <WithSidebarLayout>
-      <SinglePostPage postType='home' />
+      <SinglePostPage postType='about' />
     </WithSidebarLayout>
   );
 }

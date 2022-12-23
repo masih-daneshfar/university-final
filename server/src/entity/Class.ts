@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToMany,
+  JoinTable,
+} from "typeorm";
 import { Teacher } from "./Teacher";
 
 export enum Days {
@@ -19,7 +25,7 @@ export class Class {
   @Column("varchar", { length: 100 })
   title: string;
 
-  @Column("text", { array: true })
+  @Column("simple-array", {})
   days: Days[];
 
   @ManyToMany(() => Teacher, (teacher) => teacher.id, {

@@ -8,6 +8,7 @@ import UserRoute from "./route/user.route";
 import PostRoute from "./route/post.route";
 import FileRoute from "./route/file.route";
 import TeacherRoute from "./route/teacher.route";
+import ClassRoute from "./route/class.route";
 import SubscribeRoute from "./route/subscribe.route";
 import FaqRoute from "./route/faq.route";
 import GalleryRoute from "./route/gallery.route";
@@ -68,6 +69,7 @@ app.use("/faq", FaqRoute);
 app.use("/gallery", GalleryRoute);
 app.use("/subscribe", SubscribeRoute);
 app.use("/teacher", TeacherRoute);
+app.use("/class", ClassRoute);
 
 // error handling
 app.use(ErrorHandlingMiddleware);

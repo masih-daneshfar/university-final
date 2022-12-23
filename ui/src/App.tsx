@@ -13,6 +13,7 @@ import FaqPage from "@pages/public/faq";
 import GalleryPage from "@pages/public/gallery";
 import GalleryPostPage from "@pages/public/galleryPost";
 import HomePage from "@pages/public/home";
+import AboutUsPage from "@pages/public/aboutUs";
 import AdminBlogPostPage from "@pages/admin/adminBlogPost";
 import GlobalContextProvider from "context";
 import AdminNewBlogPostPage from "@pages/admin/adminNewBlogPost";
@@ -26,6 +27,10 @@ import AdminArtistListPage from "@pages/admin/AdminArtistList";
 import AdminArtistPostPage from "@pages/admin/adminArtistPost";
 import AdminNewArtistPostPage from "@pages/admin/adminNewArtistPost";
 import AuthSignupPage from "@pages/auth/signup";
+import AuthProfilePage from "@pages/auth/profile";
+import AdminClassesList from "@pages/admin/AdminClassesList";
+import AdminNewClassPage from "@pages/admin/adminNewClass";
+import AdminClassItemPage from "@pages/admin/adminClassItem";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +40,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <HomePage />,
+      },
+      {
+        path: "/about-us",
+        element: <AboutUsPage />,
       },
       {
         path: "/faq",
@@ -83,6 +92,10 @@ const router = createBrowserRouter([
     element: <PanelLayout />,
     children: [
       {
+        path: "/panel",
+        element: <AuthProfilePage />,
+      },
+      {
         path: "/panel/blog",
         element: <AdminBlogListPage />,
       },
@@ -129,6 +142,18 @@ const router = createBrowserRouter([
       {
         path: "/panel/artist/:id",
         element: <AdminArtistPostPage />,
+      },
+      {
+        path: "/panel/classes",
+        element: <AdminClassesList />,
+      },
+      {
+        path: "/panel/classes/new",
+        element: <AdminNewClassPage />,
+      },
+      {
+        path: "/panel/classes/:id",
+        element: <AdminClassItemPage />,
       },
     ],
   },

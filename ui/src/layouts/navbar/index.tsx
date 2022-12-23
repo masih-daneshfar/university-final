@@ -126,12 +126,21 @@ const NavbarAdminMenuLinks = () => {
         >
           <strong>مدیریت بلاگ</strong>
         </Anchor>
-      </li><li>
+      </li>
+      <li>
         <Anchor
           to='/panel/artist'
           className={clsx(styles.menuBarItem, "contrast")}
         >
           <strong>مدیریت اساتید</strong>
+        </Anchor>
+      </li>
+      <li>
+        <Anchor
+          to='/panel/classes'
+          className={clsx(styles.menuBarItem, "contrast")}
+        >
+          <strong>مدیریت کلاسها</strong>
         </Anchor>
       </li>
       <li>

@@ -1,0 +1,20 @@
+.mainTitle {
+    
+}
+
+.artistDescription {
+    padding-block: .5rem;
+    padding-inline: 1.5rem;
+    width: 100%;
+    text-align: justify;
+    display: flex;
+    align-items: center;
+}
+
+.artistAvatar {
+    width: 50%;
+    border-radius: .7rem;
+    margin-block: .7rem;
+    margin-inline-end: 1.4rem;
+    float: right;
+}

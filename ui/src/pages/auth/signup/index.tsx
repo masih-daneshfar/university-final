@@ -15,6 +15,8 @@ import Anchor from "@components/anchor";
 interface signupDataType {
   username: string;
   password: string;
+  firstName: string;
+  lastName: string;
 }
 
 export default function AuthSignupPage() {
@@ -23,6 +25,8 @@ export default function AuthSignupPage() {
   const [loginData, setLoginData] = useState<signupDataType>({
     password: "",
     username: "",
+    lastName: "",
+    firstName:"",
   });
   const [formLoading, setFormLoading] = useState<boolean>(false);
 
@@ -62,6 +66,26 @@ export default function AuthSignupPage() {
               <h2>پنل آموزشگاه موسیقی</h2>
             </hgroup>
             <form onSubmit={onSubmitLogin}>
+              <input
+                type='text'
+                name='firstName'
+                placeholder='نام'
+                aria-label='first-name'
+                autoComplete='current-password'
+                required
+                onChange={onInputChange}
+                value={loginData.firstName}
+              />
+              <input
+                type='text'
+                name='lastName'
+                placeholder='نام خانوادگی'
+                aria-label='last-name'
+                autoComplete='current-password'
+                required
+                onChange={onInputChange}
+                value={loginData.lastName}
+              />
               <input
                 type='username'
                 name='username'

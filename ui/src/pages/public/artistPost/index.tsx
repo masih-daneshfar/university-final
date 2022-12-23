@@ -24,12 +24,14 @@ export default function ArtistPostPage() {
   return (
     <WithSidebarLayout>
       <h2 className={styles.mainTitle}>{teacher.fullName}</h2>
-      <img
-        className={styles.galleryBanner}
-        src={`http://localhost:3001/uploads/${teacher.avatar?.name}`}
-        alt=''
-      />
-      <p className={styles.galleryDescription}>{teacher.description}</p>
+        <p className={styles.artistDescription}>
+        <img
+          className={styles.artistAvatar}
+          src={`http://localhost:3001/uploads/${teacher.avatar?.name}`}
+          alt=''
+        />
+          {teacher.description}
+        </p>
       <hr />
 
       {teacher.body && (
