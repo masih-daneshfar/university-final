@@ -25,6 +25,7 @@ import AdminGalleryPostPage from "@pages/admin/adminGalleryPost";
 import AdminArtistListPage from "@pages/admin/AdminArtistList";
 import AdminArtistPostPage from "@pages/admin/adminArtistPost";
 import AdminNewArtistPostPage from "@pages/admin/adminNewArtistPost";
+import AuthSignupPage from "@pages/auth/signup";
 
 const router = createBrowserRouter([
   {
@@ -70,6 +71,10 @@ const router = createBrowserRouter([
       {
         path: "/auth/login",
         element: <AuthLoginPage />,
+      },
+      {
+        path: "/auth/signup",
+        element: <AuthSignupPage />,
       },
     ],
   },

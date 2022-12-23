@@ -78,6 +78,14 @@ export const loginApiCall = async (
     toast.error(String(error));
   }
 };
+export const signupApiCall = async (
+  signupData: { username: string; password: string },
+) => {
+  return fetcher("/auth/signup", {
+    method: "post",
+    body: JSON.stringify(signupData),
+  });
+};
 
 export const logoutApiCall = async (onSuccess: Function = () => {}) => {
   try {
@@ -90,6 +98,7 @@ export const logoutApiCall = async (onSuccess: Function = () => {}) => {
     toast.error(String(error));
   }
 };
+
 export const getProfileApiCall = async () => {
   return fetcher("/auth/profile", {
     method: "get",

@@ -1,0 +1,12 @@
+.formContainer{
+    text-align: center;
+}
+
+.bannerImage {
+    padding: 5rem;
+}
+@media screen and (max-width:992px) {
+    .bannerImage {
+        display: none;
+    }
+}

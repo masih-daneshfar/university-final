@@ -8,7 +8,7 @@ const router = Router();
 router.get("/", async function (req: Request, res: Response, next) {
   try {
     const teachers = await AppDataSource.getRepository(Teacher).find({
-      relations: ["avatar"],
+      relations: ["avatar","classes"],
       order: { created_at: "DESC" },
     });
     res.json(teachers);
@@ -24,7 +24,7 @@ router.get("/:id", async function (req: Request, res: Response, next) {
   try {
     const result = await AppDataSource.getRepository(Teacher).findOneOrFail({
       where: { id: Number(req.params.id) },
-      relations: [ "avatar"],
+      relations: ["avatar", "classes"],
     });
     return res.json(result);
   } catch (error) {
@@ -61,7 +61,7 @@ router.put(
 
       const results = await AppDataSource.getRepository(Teacher).findOneOrFail({
         where: { id: Number(params.id) },
-        relations: ["avatar"],
+        relations: ["avatar", "classes"],
       });
 
       return res.send(results);

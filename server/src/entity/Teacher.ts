@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinTable } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinTable, ManyToMany } from "typeorm";
+import { Class } from "./Class";
 import { File } from "./File";
 
 @Entity()
@@ -15,6 +16,12 @@ export class Teacher {
   @ManyToOne(() => File)
   @JoinTable()
   avatar: File;
+
+  @ManyToMany(() => Class, (classroom) => classroom.id, {
+    cascade: true,
+  })
+  @JoinTable()
+  classes: Class[];
 
   @Column("text")
   body: string;

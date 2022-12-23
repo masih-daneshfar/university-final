@@ -6,27 +6,28 @@ import {
   useState,
 } from "react";
 import lockImage from "@assets/images/lock.png";
-import styles from "./authPage.module.css";
-import { loginApiCall } from "@api/apis";
+import styles from "./authSignupPage.module.css";
+import { signupApiCall} from "@api/apis";
 import { useNavigate } from "react-router-dom";
 import { useGlobalContext } from "context";
 import Anchor from "@components/anchor";
 
-interface loginDataType {
+interface signupDataType {
   username: string;
   password: string;
 }
 
-export default function AuthPage() {
+export default function AuthSignupPage() {
   const { currentUser, updateUserInfo } = useGlobalContext();
   const navigate = useNavigate();
-  const [loginData, setLoginData] = useState<loginDataType>({
+  const [loginData, setLoginData] = useState<signupDataType>({
     password: "",
     username: "",
   });
   const [formLoading, setFormLoading] = useState<boolean>(false);
 
-  const goToPanel = useCallback(() => navigate("/panel"),[navigate]);
+  const goToLogin = useCallback(() => navigate("/auth/login"), [navigate]);
+  const goToPanel = useCallback(() => navigate("/panel"), [navigate]);
 
   useEffect(() => {
     if (currentUser.loggedIn) goToPanel();
@@ -44,12 +45,12 @@ export default function AuthPage() {
     async (event) => {
       event.preventDefault();
       setFormLoading(true);
-      await loginApiCall(loginData);
+      await signupApiCall(loginData);
       await updateUserInfo();
       setFormLoading(false);
-      goToPanel();
+      goToLogin();
     },
-    [goToPanel, loginData, updateUserInfo]
+    [goToLogin, loginData, updateUserInfo]
   );
   return (
     <>
@@ -57,7 +58,7 @@ export default function AuthPage() {
         <article className='grid'>
           <div className={styles.formContainer}>
             <hgroup>
-              <h1>ورود</h1>
+              <h1>ثبت‌نام</h1>
               <h2>پنل آموزشگاه موسیقی</h2>
             </hgroup>
             <form onSubmit={onSubmitLogin}>
@@ -72,7 +73,7 @@ export default function AuthPage() {
                 value={loginData.username}
               />
               <input
-                type='password'
+                type='text'
                 name='password'
                 placeholder='کلمه عبور'
                 aria-label='Password'
@@ -86,9 +87,11 @@ export default function AuthPage() {
                 className='contrast'
                 aria-busy={formLoading}
               >
-                ورود
+                ثبت‌نام
               </button>
-              <Anchor role={"button"} fullWidth contrast to='/auth/signup'>ثبت‌نام</Anchor>
+              <Anchor role={"button"} fullWidth contrast to='/auth/login'>
+                ورود
+              </Anchor>
             </form>
           </div>
           <img className={styles.bannerImage} src={lockImage} alt='' />
